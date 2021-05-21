@@ -18,14 +18,18 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// import{ AuthContext } from '../components/context';
+ import {useAuth}  from './authContext';
 
 
 export function DrawerContent(props: any) {
 
     const paperTheme = useTheme();
 
-// const { signOut, toggleTheme } = React.useContext(AuthContext);
+    const { signOut } = useAuth();
+
+    function handleSignOut() {
+        signOut();
+    }
 
     return(
         <View style={{flex:1}}>
@@ -136,7 +140,7 @@ export function DrawerContent(props: any) {
                         />
                     )}
                     label="Sair"
-                    onPress={() => {}}
+                    onPress={handleSignOut}
                 />
             </Drawer.Section>
         </View>

@@ -15,16 +15,22 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
 import { useTheme } from 'react-native-paper';
-import { AuthContext } from '../components/context';
+import  {useAuth}  from '../components/authContext';
 import { useNavigation } from '@react-navigation/native';
 
 import Users from '../model/Users';
 
-const SignIn = () => {
+
+const SignIn: React.FC = () => {
 
     const navigation = useNavigation();
+    const { signed, user, signIn, signOut } = useAuth();
+
+    console.log(signed);
+   // console.log(user);
+
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
         password: '',
         check_textInputChange: false,
         secureTextEntry: true,
@@ -34,20 +40,18 @@ const SignIn = () => {
 
     const { colors } = useTheme();
 
-    // const { signIn } = React.useContext(AuthContext);
-
     const textInputChange = (val: string) => {
         if( val.trim().length >= 4 ) {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: true,
                 isValidUser: true
             });
         } else {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: false,
                 isValidUser: false
             });
@@ -55,7 +59,7 @@ const SignIn = () => {
     }
 
     const handlePasswordChange = (val: string) => {
-        if( val.trim().length >= 8 ) {
+        if( val.trim().length >= 6 ) {
             setData({
                 ...data,
                 password: val,
@@ -91,26 +95,42 @@ const SignIn = () => {
         }
     }
 
-    const loginHandle = (userName: string, password: string) => {
+    const loginHandle = (email: string, password: string) => {
 
-        const foundUser = Users.filter( item => {
-            return userName == item.username && password == item.password;
-        } );
+        console.log(email, password);
 
-        if ( data.username.length == 0 || data.password.length == 0 ) {
+        // const foundUser = Users.filter( item => {
+        //     return userName == item.username && password == item.password;
+        // } );
+
+        if ( data.email.length == 0 || data.password.length == 0 ) {
             Alert.alert('Dados Incorretos!', 'O usuário ou senha não pode estar vazio.', [
                 {text: 'Fechar'}
             ]);
             return;
         }
 
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Usuário Inválido!', 'Usuário ou senha está incorreta.', [
-                {text: 'Fechar'}
-            ]);
-            return;
+        let params = {
+            email: email,
+            password: password
         }
-       // signIn(foundUser);
+
+        // if ( foundUser.length == 0 ) {
+        //     Alert.alert('Usuário Inválido!', 'Usuário ou senha está incorreta.', [
+        //         {text: 'Fechar'}
+        //     ]);
+        //     return;
+        // }
+        console.log('entrou no loginHandle 1');
+
+        signIn(params);
+    }
+
+     function handleSignIn() {
+        signIn(data);
+    }
+    function handleSignOut() {
+        signOut();
     }
 
     return (
@@ -203,7 +223,7 @@ const SignIn = () => {
             </View>
             { data.isValidPassword ? null : 
             <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>A senha deve ter 8 caracteres.</Text>
+            <Text style={styles.errorMsg}>A senha deve ter 6 caracteres.</Text>
             </Animatable.View>
             }
             
@@ -214,7 +234,8 @@ const SignIn = () => {
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={() => {loginHandle( data.username, data.password )}}
+                    // onPress={handleSignIn}
+                     onPress={() => {loginHandle( data.email, data.password )}}
                 >
                 <LinearGradient
                     colors={['#08d4c4', '#01ab9d']}
@@ -227,7 +248,7 @@ const SignIn = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('SignUp')}
+                    onPress={signOut}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
