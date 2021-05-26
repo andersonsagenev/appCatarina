@@ -15,7 +15,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
 import { useTheme } from 'react-native-paper';
-import  {useAuth}  from '../components/authContext';
+import  {useAuth}  from '../components/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 
 import Users from '../model/Users';

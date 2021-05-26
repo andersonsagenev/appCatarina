@@ -9,7 +9,7 @@ import { NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
   DarkTheme as NavigationDarkTheme } from '@react-navigation/native';
 
-import { AuthProvider } from './src/components/authContext';
+import { AuthProvider } from './src/components/AuthContext';
 
 export default function App() {
 

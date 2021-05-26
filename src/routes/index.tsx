@@ -1,7 +1,7 @@
 import React from 'react';
 import StackRoutes from './stack.routes';
 import DrawerRoutes from './drawer.routes';
-import {useAuth}  from '../components/authContext';
+import {useAuth}  from '../components/AuthContext';
 
 import { 
     Provider as PaperProvider, 

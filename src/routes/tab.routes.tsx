@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 
 import Home from '../pages/Home';
-import Profile from '../pages/Profile';
+import Support from '../pages/Support';
 import About from '../pages/About';
 
 const TabRoutes = createBottomTabNavigator();
@@ -15,7 +15,7 @@ const icons: any = {
     About: {
         name: 'ios-people'
     },
-    Profile: {
+    Support: {
         name: 'ios-call'
     }
 };
@@ -38,7 +38,7 @@ const Tab: React.FC = () => (
     >
     <TabRoutes.Screen name="Home" component={Home}/>
     <TabRoutes.Screen name="About" component={About}/>
-    <TabRoutes.Screen name="Profile" component={Profile}/>
+    <TabRoutes.Screen name="Support" component={Support}/>
 
     </TabRoutes.Navigator>
 );
