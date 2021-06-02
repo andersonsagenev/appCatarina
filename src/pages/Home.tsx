@@ -1,9 +1,13 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 
+import Colors from '../styles/colors';
+
+
 import BalancePanel from '../components/BalancePanelMain';
 import EntrySummary from '../components/EntrySummary';
 import EntryList from '../components/EntryList';
+import { useNavigation } from '@react-navigation/native';
 
 const Main = () => {
   return (
@@ -18,7 +22,8 @@ const Main = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    backgroundColor: Colors.background,
+    //padding: 10,
   },
 });
 

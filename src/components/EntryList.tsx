@@ -1,11 +1,29 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 
 import EntryListItem from './EntryListItem/EntryListItem';
+import Container from '../components/Container';
+import {getEntries} from '../services/Entries';
 
 const EntryList = () => {
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    async function loadEntries() {
+      const data = await getEntries();
+    //  setEntries(data);
+    }
+
+    loadEntries();
+   
+  }, []);
+
   return (
-    <View>
+    <Container
+    title="Últimos Lançamentos"
+    actionLabelText="Últimos 7 dias"
+    actionButtonText="Ver mais"
+    onPressActionButton={() => {}}>
       <Text style={styles.title}>Últimos Lançamentos</Text>
       <FlatList
         data={[
@@ -15,7 +33,7 @@ const EntryList = () => {
         ]}
         renderItem={({item}) => <Text style={styles.entry}>- {item.key}</Text>}
       />
-    </View>
+    </Container>
   );
 };
 

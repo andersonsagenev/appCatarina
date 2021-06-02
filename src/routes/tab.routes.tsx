@@ -5,6 +5,7 @@ import  Icon  from 'react-native-vector-icons/Ionicons';
 import Home from '../pages/Home';
 import Support from '../pages/Support';
 import About from '../pages/About';
+import Report from '../pages/Report';
 
 const TabRoutes = createBottomTabNavigator();
 

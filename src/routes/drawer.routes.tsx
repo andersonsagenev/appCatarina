@@ -6,7 +6,10 @@ import Tab from '../routes/tab.routes';
 import SupportScreen from '../pages/Support';
 import SettingsScreen from '../pages/Settings';
 import BookmarkScreen from '../pages/Bookmark';
+import Report from '../pages/Report';
 import Profile from '../pages/Profile';
+import NewEntry from '../pages/NewEntry';
+
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import { DrawerContent } from '../components/DrawerContent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,19 +26,27 @@ const NavigationDrawerStructure = (props: any) => {
 
 const DrawerRoutes: React.FC = () => (
    
-    <Drawer.Navigator screenOptions={{
-        headerStyle: {
-          backgroundColor: '#ffff',
-          shadowColor: '#ffff', // iOS
-          elevation: 0, // Android
-        },
-        headerTintColor: '#c2b2b2'
+    <Drawer.Navigator 
+    //screenOptions={{
+      //   headerStyle: {
+      //     backgroundColor: '#ffff',
+      //     shadowColor: '#ffff', // iOS
+      //     elevation: 0, // Android
+      //   },
+      //   headerTintColor: '#c2b2b2',
+        
+      // }}
+      drawerContentOptions={{
+        activeBackgroundColor: '#2ccbb9',
+        activeTintColor: '#fff'
       }}
        drawerContent={props => <DrawerContent {...props} />}>
         <Drawer.Screen name="HomeDrawer" component={Tab} />
         <Drawer.Screen name="SupportScreen" component={SupportScreen} />
         <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
         <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
+        <Drawer.Screen name="Report" component={Report} />
+        <Drawer.Screen name="NewEntry" component={NewEntry} />
         <Drawer.Screen name="Profile" component={Profile} 
          options={{
             title: 'Profile', 

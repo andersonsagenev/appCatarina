@@ -1,15 +1,24 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../styles/colors';
+import { LinearGradient }  from 'expo-linear-gradient';
 
-// import { Container } from './styles';
+import StatusBarPage from '../components/StatusBarPage';
+import Menu from '../components/Menu';
 
 const About: React.FC = () => {
   return (
-    <View style={styles.container}>
+
+    <LinearGradient colors={['#1ddbb9', '#132742']}
+    style={{ flex:1, justifyContent: 'center'}}>
+      <StatusBarPage
+      barStyle='ligth-content'
+      backgroundColor="#1ddbb9" />
       <Text>About!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Menu/>
+     
+    </LinearGradient>
 
     )
 }
