@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { useNavigation } from  '@react-navigation/native';
+import { DrawerActions, useNavigation } from  '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import StatusBarPage from '../components/StatusBarPage';
 
 const Menu: React.FC = () => {
-    const navigation = useNavigation();
+   const navigation = useNavigation();
   return (
 
     <View style={styles.buttonMenu}>
       <TouchableOpacity 
-        onPress={ () => navigation.openDrawer() }>
+        onPress={ () => navigation.dispatch(DrawerActions.openDrawer())}>
         <Feather name="menu" size={40} color="#FFF" />
     </TouchableOpacity>
     
