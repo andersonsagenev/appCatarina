@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 
   },
   containerContent: {
-    marginTop: Platform.OS === 'ios' ? 35 : 15,
+    marginTop: Platform.OS === 'ios' ? 35+'%' : 15+'%',
   },
   subtitle: {
     fontSize: 16,

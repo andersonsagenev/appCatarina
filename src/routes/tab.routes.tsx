@@ -5,7 +5,7 @@ import  Icon  from 'react-native-vector-icons/Ionicons';
 import Home from '../pages/Home';
 import Support from '../pages/Support';
 import About from '../pages/About';
-import Report from '../pages/Report';
+import Links from '../pages/Links';
 
 const TabRoutes = createBottomTabNavigator();
 
@@ -16,7 +16,7 @@ const icons: any = {
     About: {
         name: 'ios-people'
     },
-    Support: {
+    Links: {
         name: 'ios-call'
     }
 };
@@ -39,7 +39,7 @@ const Tab: React.FC = () => (
     >
     <TabRoutes.Screen name="Home" component={Home}/>
     <TabRoutes.Screen name="About" component={About}/>
-    <TabRoutes.Screen name="Support" component={Support}/>
+    <TabRoutes.Screen name="Links" component={Links}/>
 
     </TabRoutes.Navigator>
 );
