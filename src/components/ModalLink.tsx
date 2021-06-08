@@ -5,16 +5,16 @@ import { Feather } from '@expo/vector-icons';
 import Clipboard from 'expo-clipboard';
 
 
-const ModalLink: React.FC = ( { onClose } : any) => {
+const ModalLink: React.FC = ( { onClose, data } : any) => {
 
     function copyLink() {
-        Clipboard.setString('https://seulink.com.br')
+        Clipboard.setString(data.link)
     }
 
    async function handleShare() {
         try {
             const result = await Share.share({
-                message: `Link: http://seulink.com.br`
+                message: `Link: ${data.link}`
             });
             if( result.action == Share.sharedAction) {
                 if(result.activityType){
@@ -60,12 +60,15 @@ const ModalLink: React.FC = ( { onClose } : any) => {
 
             <View style={styles.LinkArea}>
                 <Text style={styles.TitleLinkArea}>Link encurtado</Text>
-                <Text style={styles.LongUrl}>https://cogTech.com.br</Text>
+                <Text numberOfLines={1} 
+                      style={styles.LongUrl}>
+                        {data.long_url}
+                </Text>
 
                 <TouchableOpacity activeOpacity={1} 
                                   style={styles.shortLinkArea}
                                   onPress={copyLink}>
-                    <Text numberOfLines={1} style={styles.InputLink}>https://cogTech.com.br/ </Text>
+                    <Text numberOfLines={1} style={styles.InputLink}>{data.link}</Text>
                     <TouchableOpacity
                         onPress={copyLink}>
                         <Feather name="copy"

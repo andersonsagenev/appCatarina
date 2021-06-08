@@ -10,7 +10,7 @@ const LinksScreen = () => {
     return (
       <View style={styles.container}>
            <StatusBarPage
-          barStyle='ligth-content'
+          barStyle="ligth-content"
           backgroundColor="#132742" />
 
         <Menu />
@@ -20,13 +20,12 @@ const LinksScreen = () => {
 
         <FlatList
         data={[
-          {key: 'Padaria Asa Branca: $10'},
-          {key: 'Supermercado Isadora: $190'},
-          {key: 'Posto Ipiranga: $190'},
+          1,3,5,6
+          
         ]}
         keyExtractor={(item) => String(item.key) }
-        renderItem={({item}) => <Text style={styles.links}>- {item.key}</Text>}
-        contentContainerStyle={{paddingBottom: 20}}
+        renderItem={({item}) => <ListItem data={item} />}
+        contentContainerStyle={{paddingBottom: 22}}
         showsVerticalScrollIndicator={false}
 
         // <ListItem data={item} />

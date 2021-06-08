@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {
   View, Text, StyleSheet, Image, TextInput, TouchableOpacity,
-  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Modal, Animated
+  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Modal, Animated, ActivityIndicator
 } from 'react-native';
 import Colors from '../styles/colors';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,18 +10,51 @@ import StatusBarPage from '../components/StatusBarPage';
 import Menu from '../components/Menu';
 import { Feather } from '@expo/vector-icons';
 
+import api from '../services/apiBitly';
+
 import ModalLink from '../components/ModalLink';
 import ModalSuccess from '../components/ModalSuccess';
+import { saveLink } from '../utils/storeLinks';
 
 const About: React.FC = () => {
-
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState({});
   const [showModal, setShowModal] = React.useState(false);
   const scaleValue = React.useRef(new Animated.Value(0)).current;
 
-  function handleShortLink() {
-    setModalVisible(true);
+  async function handleShortLink() {
+    setLoading(true);
+    try {
+      const response = await api.post('/shorten',
+      {
+        long_url: input
+      })
+      setData(response.data);
+      setModalVisible(true);
+
+      saveLink('pastaLinks', response.data)
+
+      Keyboard.dismiss();
+      setLoading(false);
+      setInput('');
+      
+      console.log(response.data);
+
+    } catch (error) {
+      alert('Ops, parece que algo deu errado');
+      Keyboard.dismiss();
+      setInput('');
+      setLoading(false);
+    }
+
+    //setModalVisible(true);
+    //setShowModal(true);
+  }
+
+  function handleShortClose() {
+    setModalVisible(false);
     //setShowModal(true);
   }
 
@@ -70,9 +103,15 @@ const About: React.FC = () => {
             </View>
 
             <TouchableOpacity
-              onPress={ handleShortLink }
+              onPress={ handleShortLink } 
               style={styles.ButtonLink} >
-              <Text style={styles.ButtonText}>Gerar Link</Text>
+                {
+                  loading ? ( <ActivityIndicator color='#121212' size={24} />
+                  ) :  (
+                    <Text style={styles.ButtonText}>Gerar Link</Text>
+                  )
+                }
+             
             </TouchableOpacity>
 
           </View>
@@ -80,11 +119,11 @@ const About: React.FC = () => {
         </KeyboardAvoidingView>
 
         <Modal visible={modalVisible} transparent animationType='slide'>
-            <ModalLink onClose={ () => setModalVisible(false) }/>
+            <ModalLink onClose={ () => setModalVisible(false) } data={data} />
         </Modal>
 
         <Modal transparent visible={showModal}>
-          <ModalSuccess onClose={ () => setShowModal(false)}/>
+          <ModalSuccess onClose={ handleShortClose }/>
         </Modal>
 
 
