@@ -1,25 +1,38 @@
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import  Swipeable  from 'react-native-gesture-handler/Swipeable'
 
 
 
-const ListItem = () => {
+const ListItem = ({ data, selectedItem, deleteItem } : any) => {
+
+function RigthActions(){
+  return (
+    <TouchableOpacity style={styles.ButtonTrash}
+                      onPress={ () => deleteItem(data.id) }>
+       <Feather name="trash"
+                color="#FFF"
+                size={24} />
+    </TouchableOpacity>
+  )
+}
+
+
     return (
       <View>
-      
-        <TouchableOpacity style={styles.containerButton}
-        activeOpacity={0.9}
-          onPress={() => alert('Button Clicked!')}
+        <Swipeable renderRightActions={ RigthActions }>
+         <TouchableOpacity style={styles.containerButton}
+         activeOpacity={0.9}
+          onPress={ () => selectedItem(data)}
         >
            <Feather name="link"
                     color="#FFF"
                     size={24} />
-          <Text style={styles.link} numberOfLines={1}>https://youtube.com</Text>
+          <Text style={styles.link} numberOfLines={1}>{ data.long_url }</Text>
 
         </TouchableOpacity>
-
+        </Swipeable>
       </View>
     );
 };
@@ -42,5 +55,14 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       paddingRight: 20,
     },
+    ButtonTrash: {
+      width: '15%',
+      backgroundColor: '#FF5555',
+      borderRadius: 7,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 10,
+      marginVertical: 7
+    }
    
   });

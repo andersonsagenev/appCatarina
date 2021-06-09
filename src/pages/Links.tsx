@@ -1,12 +1,47 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, FlatList, Modal, ActivityIndicator } from 'react-native';
 import { Platform } from 'react-native';
 import StatusBarPage from '../components/StatusBarPage';
 import Menu from '../components/Menu';
+import { useIsFocused } from '@react-navigation/native';
+import ModalLink from '../components//ModalLink'
 
 import ListItem from '../components/ListLinkItem/ListItem';
 
+import { getLinksSave, deleteLink } from '../utils/storeLinks';
+
 const LinksScreen = () => {
+
+  const isFocused = useIsFocused();
+
+  const [links, setLinks] = useState([]);
+  const [data, setData] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(()=> {
+    async function getLinks() {
+      const result = await getLinksSave('pastaLinks');
+      setLinks(result);
+    }
+
+    getLinks();
+  }, [isFocused])
+
+  function handleItem(item: any){
+    setData(item);
+    setModalVisible(true);
+    console.log(item);
+  }
+
+  async function handleDelete(id: any){
+    const result = await deleteLink(links, id);
+    setLinks(result);
+    console.log(id)
+    console.log('Deletado', id)
+  }
+
     return (
       <View style={styles.container}>
            <StatusBarPage
@@ -14,22 +49,35 @@ const LinksScreen = () => {
           backgroundColor="#132742" />
 
         <Menu />
+
         <Text style={styles.title}>
-            Links Screen 
+            Meus Links
         </Text>
 
-        <FlatList
-        data={[
-          1,3,5,6
-          
-        ]}
-        keyExtractor={(item) => String(item.key) }
-        renderItem={({item}) => <ListItem data={item} />}
-        contentContainerStyle={{paddingBottom: 22}}
-        showsVerticalScrollIndicator={false}
+        {
+          loading && (
+            <View style={styles.empty}>
+              <ActivityIndicator color="#FFF" size={25} />
+            </View>
+        )}
+        {
+          !loading && links.length === 0 && (
+            <View style={styles.empty}>
+              <Text style={styles.emptyText}>Você não possui nenhum link :(</Text>
+            </View>
+        )}
 
-        // <ListItem data={item} />
-      />
+        <FlatList
+        data={links}
+        keyExtractor={ (item) => String(item.id) }
+        renderItem={ ({item}) => <ListItem data={item} selectedItem={ handleItem } deleteItem={ handleDelete }/>}
+        contentContainerStyle={{paddingBottom: 22}}
+        showsVerticalScrollIndicator={false} />
+
+        <Modal visible={modalVisible} transparent animationType='slide'>
+            <ModalLink onClose={ () => setModalVisible(false) } data={data} />
+        </Modal>
+
 
       </View>
     );
@@ -49,7 +97,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFF'
   },
-  links: {
-
+  empty: {
+    marginTop: '15%',
+    alignItems: 'center'
+  },
+  emptyText: {
+    fontSize: 17,
+    color: '#FFF'
   }
 });
