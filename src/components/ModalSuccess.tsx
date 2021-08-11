@@ -8,7 +8,7 @@ const ModalSuccess: React.FC = ({ onClose }: any) => {
             <View style={styles.modalContainer}>
 
                 <View style={{ alignItems: 'center' }}>
-                    <View style={styles.header}>
+                      <View style={styles.header}>
                         <TouchableOpacity onPress={onClose}>
                             <Image
                                 source={require('../../assets/x.png')}

@@ -6,6 +6,8 @@ import Tab from '../routes/tab.routes';
 import SupportScreen from '../pages/Support';
 import SettingsScreen from '../pages/Settings';
 import BookmarkScreen from '../pages/Bookmark';
+import UsersScreen from '../pages/Users';
+
 import Report from '../pages/Report';
 import Profile from '../pages/Profile';
 import NewEntry from '../pages/NewEntry';
@@ -47,6 +49,7 @@ const DrawerRoutes: React.FC = () => (
         <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
         <Drawer.Screen name="Report" component={Report} />
         <Drawer.Screen name="NewEntry" component={NewEntry} />
+        {/* <Drawer.Screen name="UsersScreen" component={UsersScreen} /> */}
         <Drawer.Screen name="Profile" component={Profile} 
          options={{
             title: 'Profile', 

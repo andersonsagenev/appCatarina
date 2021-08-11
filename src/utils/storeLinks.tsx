@@ -25,8 +25,8 @@ export async function saveLink(key: string, newlink: any) {
 }
 
 // Deletar algum link especifico.
-export async function deleteLink(links: string, id: string) {
-    let myLinks = links.filter( (item) => {
+export async function deleteLink(links: any, id: string) {
+    let myLinks = links.filter( (item: any) => {
         return (item.id !== id)
     })
 

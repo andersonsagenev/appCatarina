@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
+import { Keyboard } from 'react-native';
 
 interface userData {
     email: string,
@@ -38,10 +39,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }, []);
 
     async function signIn({ email, password }: userData) {
-
-        console.log(email)
-        console.log(password)
-
+        setLoading(true);
         try {
             const response = await api.post('/authenticate', {
                 email,
@@ -56,8 +54,13 @@ export const AuthProvider: React.FC = ({ children }) => {
             await AsyncStorage.setItem('@Auth:user', JSON.stringify(user));
             await AsyncStorage.setItem('@Auth:token', token);
 
+            setLoading(false);
+
         } catch (error) {
             console.log(error)
+            alert('Ops, parece que algo deu errado');
+            Keyboard.dismiss();
+            setLoading(false);
         }
 
     }

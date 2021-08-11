@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import SplashScreen from '../pages/SplashScreen';
+import UsersScreen from '../pages/Users';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 
@@ -19,10 +20,11 @@ const AppRoutes: React.FC = () => (
         },
     }}>
 
-    <StackRoutes.Screen name="SplashScreen" component={SplashScreen}/>
+    {/* <StackRoutes.Screen name="SplashScreen" component={SplashScreen}/> */}
     <StackRoutes.Screen name="SignIn" component={SignIn}/>
     <StackRoutes.Screen name="Home" component={Tab} options={{ headerShown: false }}/>
     <StackRoutes.Screen name="SignUp" component={SignUp}/>
+    <StackRoutes.Screen name="UsersScreen" component={UsersScreen}/>
 
     </StackRoutes.Navigator>
 )
